@@ -12,8 +12,9 @@ import type { MedicalRecord } from "@/types";
 export default function PatientPage() {
   const { id } = useParams<{ id: string }>();
   const patient = MOCK_PATIENTS.find((p) => p.id === id);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [medicalRecord, setMedicalRecord] = useState<MedicalRecord | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!patient) {
     return (
@@ -24,23 +25,9 @@ export default function PatientPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col gap-6">
-      {/* Header do Paciente */}
-      <PatientHeader 
-        patient={patient} 
-        onEditMedicalRecord={() => setIsModalOpen(true)}
-      />
+    <div className="flex flex-col gap-6 h-full">
 
-      {/* Grid com 2 colunas — Telemetria e Prontuário */}
-      <div className="grid grid-cols-2 gap-6">
-        <TelemetryCard patient={patient} />
-        <MedicalRecordCard 
-          record={medicalRecord} 
-          onAdd={() => setIsModalOpen(true)}
-        />
-      </div>
-
-      {/* Modal para Editar Prontuário */}
+      {/* Modal de ficha médica */}
       {isModalOpen && (
         <MedicalRecordModal
           patient={patient}
@@ -49,6 +36,22 @@ export default function PatientPage() {
           onClose={() => setIsModalOpen(false)}
         />
       )}
+
+      {/* Cabeçalho do paciente */}
+      <PatientHeader
+        patient={patient}
+        onEditMedicalRecord={() => setIsModalOpen(true)}
+      />
+
+      {/* Conteúdo principal — telemetria + prontuário */}
+      <div className="grid grid-cols-2 gap-6 flex-1">
+        <TelemetryCard patient={patient} />
+        <MedicalRecordCard
+          record={medicalRecord}
+          onAdd={() => setIsModalOpen(true)}
+        />
+      </div>
+
     </div>
   );
 }

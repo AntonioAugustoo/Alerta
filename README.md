@@ -61,7 +61,7 @@ Uma interface moderna desenvolvida que permite à equipe de enfermagem visualiza
 ## 📁 Estrutura do Projeto
 
 ```
-
+sera prenchido ou removido depois 
 ```
 
 ---
@@ -76,7 +76,7 @@ Esta seção será atualizada conforme o avanço do desenvolvimento com as instr
 ## 👥 Equipe e Contato
 
 - **Antonio Augusto** — Software Engineer (INATEL)
-- **Fernando Puelba** — Software Engineer (INATEL)
+- **Fernando Puebla** — Software Engineer (INATEL)
 
 ---
 

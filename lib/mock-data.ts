@@ -18,6 +18,7 @@ export const MOCK_PATIENTS: Patient[] = [
     riskLevel: "medium",
     deviceId: "#C2044",
     battery: 83,
+    bedId: "B102-A",
   },
   {
     id: "patient-002",
@@ -28,7 +29,7 @@ export const MOCK_PATIENTS: Patient[] = [
     riskLevel: "low",
     deviceId: "#AA812",
     battery: 45,
-   
+    bedId: "A205-B",
   },
   {
     id: "patient-003",
@@ -39,6 +40,7 @@ export const MOCK_PATIENTS: Patient[] = [
     riskLevel: "high",
     deviceId: "#B2301",
     battery: 98,
+    bedId: "B108-C",
   },
   {
     id: "patient-004",
@@ -49,7 +51,7 @@ export const MOCK_PATIENTS: Patient[] = [
     riskLevel: "high",
     deviceId: "#DB022",
     battery: 12, // ⚠️ crítico — vai aparecer em vermelho na UI
-   
+    bedId: "C312-D",
   },
   {
     id: "patient-005",
@@ -60,7 +62,7 @@ export const MOCK_PATIENTS: Patient[] = [
     riskLevel: "low",
     deviceId: "#LS521",
     battery: 82,
-   
+    bedId: "A202-E",
   },
 ];
 

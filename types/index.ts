@@ -19,6 +19,7 @@ export interface Patient {
   riskLevel: RiskLevel;
   deviceId: string;
   battery: number;
+  bedId?: string;
   avatarUrl?: string;
 }
 
@@ -86,4 +87,14 @@ export interface DeviceNotification {
   message: string;
   deviceId: string;
   scheduledFor?: string;
+}
+
+// ============================================================
+// DOMÍNIO: FICHA MÉDICA (sem persistência — só frontend)
+// ============================================================
+
+export interface MedicalRecord {
+  riskLevel: RiskLevel;
+  responsible?: string;   // opcional — nome do médico ou enfermeiro
+  observations?: string;  // opcional — campo livre
 }

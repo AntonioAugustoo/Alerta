@@ -2,8 +2,10 @@ import { Sidebar } from "@/components/layout/Sidebar";
 
 export default function DashboardLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <div className="flex h-screen overflow-hidden bg-slate-100">
@@ -11,6 +13,7 @@ export default function DashboardLayout({
       <main className="flex-1 overflow-auto p-6 flex flex-col">
         {children}
       </main>
+      {modal}
     </div>
   );
 }

@@ -19,6 +19,19 @@ export const MOCK_PATIENTS: Patient[] = [
     deviceId: "#C2044",
     battery: 83,
     bedId: "B102-A",
+    fallHistory: [
+    {
+      date: "10/05/2025",
+      time: "03:42",
+    
+    },
+    {
+      date: "28/04/2025",
+      time: "21:15",
+     
+    },
+  ],
+    
   },
   {
     id: "patient-002",
@@ -52,6 +65,12 @@ export const MOCK_PATIENTS: Patient[] = [
     deviceId: "#DB022",
     battery: 12, // ⚠️ crítico — vai aparecer em vermelho na UI
     bedId: "C312-D",
+    fallHistory: [
+    {
+      date: "12/05/2025",
+      time: "14:30",
+    },
+  ],
   },
   {
     id: "patient-005",
@@ -64,6 +83,7 @@ export const MOCK_PATIENTS: Patient[] = [
     battery: 82,
     bedId: "A202-E",
   },
+  
 ];
 
 // ============================================================
@@ -102,3 +122,8 @@ export const MOCK_NOTIFICATIONS: DeviceNotification[] = [
     scheduledFor: "02:10",
   },
 ];
+
+
+
+
+

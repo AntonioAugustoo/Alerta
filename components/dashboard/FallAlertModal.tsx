@@ -10,18 +10,11 @@ interface FallAlertModalProps {
   onDismiss: () => void;
 }
 
-export function FallAlertModal({
-  alert,
-  onRespond,
-  onDismiss,
-}: FallAlertModalProps) {
-  // Toca um beep de alerta quando o modal abre
+export function FallAlertModal({ alert, onRespond, onDismiss }: FallAlertModalProps) {
   useEffect(() => {
     const audio = new Audio("/alert.mp3");
     audio.volume = 0.7;
-    audio.play().catch(() => {
-      // Navegador pode bloquear autoplay — falha silenciosa
-    });
+    audio.play().catch(() => {});
   }, []);
 
   const time = alert.detectedAt.toLocaleTimeString("pt-BR", {
@@ -32,10 +25,7 @@ export function FallAlertModal({
 
   return (
     <>
-      {/* Overlay escuro cobrindo tudo */}
       <div className="fixed inset-0 bg-black/60 z-40 animate-pulse" />
-
-      {/* Modal centralizado */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
 
@@ -43,42 +33,29 @@ export function FallAlertModal({
           <div className="bg-red-600 px-6 py-4 flex items-center gap-3">
             <AlertTriangle size={24} className="text-white flex-shrink-0" />
             <div>
-              <p className="text-white font-bold text-lg leading-tight">
-                QUEDA DETECTADA
-              </p>
-              <p className="text-red-200 text-xs">
-                Alerta imediato — Resposta necessária
-              </p>
+              <p className="text-white font-bold text-lg leading-tight">QUEDA DETECTADA</p>
+              <p className="text-red-200 text-xs">Alerta imediato — Resposta necessária</p>
             </div>
           </div>
 
           {/* Corpo */}
-          <div className="px-6 py-5 flex flex-col gap-4">
+          <div className="px-6 py-5 flex flex-col gap-4 bg-white">
 
             {/* Dados do paciente */}
             <div className="flex items-center gap-3 bg-slate-50 rounded-xl p-3 border border-slate-100">
-              {/* Avatar com iniciais */}
               <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center flex-shrink-0">
                 <span className="text-slate-600 text-sm font-semibold">
-                  {alert.patientName
-                    .split(" ")
-                    .slice(0, 2)
-                    .map((n) => n[0])
-                    .join("")}
+                  {alert.patientName.split(" ").slice(0, 2).map((n) => n[0]).join("")}
                 </span>
               </div>
               <div>
-                <p className="text-slate-800 font-semibold text-sm">
-                  {alert.patientName}
-                </p>
+                <p className="text-slate-800 font-semibold text-sm">{alert.patientName}</p>
                 <p className="text-slate-400 text-xs">{alert.location}</p>
-                <p className="text-slate-400 text-xs mt-0.5">
-                  Detectado às {time}
-                </p>
+                <p className="text-slate-400 text-xs mt-0.5">Detectado às {time}</p>
               </div>
             </div>
 
-            {/* Botões de ação */}
+            {/* Botões */}
             <div className="flex gap-3">
               <button
                 onClick={onRespond}
@@ -88,7 +65,7 @@ export function FallAlertModal({
               </button>
               <button
                 onClick={onDismiss}
-                className="flex-1 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all text-slate-600 font-medium text-sm py-3 rounded-xl"
+                className="flex-1 active:scale-95 transition-all text-slate-700 font-medium text-sm py-3 rounded-xl border-2 border-slate-200 bg-white hover:bg-slate-50"
               >
                 FALSO ALERTA
               </button>

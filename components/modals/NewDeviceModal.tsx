@@ -39,25 +39,21 @@ export function NewDeviceModal({ onClose }: NewDeviceModalProps) {
 
   return (
     <>
-      {/* Overlay */}
-      <div
-        className="fixed inset-0 bg-black/40 z-40"
-        onClick={handleClose}
-      />
-
-      {/* Modal */}
+      <div className="fixed inset-0 bg-black/40 z-40" onClick={handleClose} />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-
+        <div
+          style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border)" }}
+          className="rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border"
+        >
           {/* Cabeçalho */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-            <h2 className="text-slate-800 font-bold text-base">
+          <div
+            style={{ borderBottomColor: "var(--border)" }}
+            className="flex items-center justify-between px-6 py-4 border-b"
+          >
+            <h2 style={{ color: "var(--text-primary)" }} className="font-bold text-base">
               Vincular Novo ALERTA
             </h2>
-            <button
-              onClick={handleClose}
-              className="text-slate-400 hover:text-slate-600 transition-colors"
-            >
+            <button onClick={handleClose} style={{ color: "var(--text-muted)" }} className="transition-colors">
               <X size={18} />
             </button>
           </div>
@@ -67,7 +63,7 @@ export function NewDeviceModal({ onClose }: NewDeviceModalProps) {
 
             {/* MAC Address */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-medium text-slate-600">
+              <label style={{ color: "var(--text-secondary)" }} className="text-xs font-medium">
                 Identificador Principal (MAC)
               </label>
               <input
@@ -75,36 +71,41 @@ export function NewDeviceModal({ onClose }: NewDeviceModalProps) {
                 value={mac}
                 onChange={(e) => setMac(e.target.value)}
                 placeholder="Ex: 24:0A:C4:9A:58:33"
-                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:border-slate-400 transition-colors font-mono"
+                style={{
+                  backgroundColor: "var(--bg-card-inner)",
+                  borderColor: "var(--border)",
+                  color: "var(--text-primary)",
+                }}
+                className="w-full px-3 py-2.5 rounded-xl border text-sm outline-none transition-colors font-mono placeholder:text-slate-500"
               />
             </div>
 
             {/* Chip ID */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-medium text-slate-600">
+              <label style={{ color: "var(--text-secondary)" }} className="text-xs font-medium">
                 Chip ID
-                <span className="text-slate-400 font-normal ml-1">
-                  (opcional)
-                </span>
+                <span style={{ color: "var(--text-muted)" }} className="font-normal ml-1">(opcional)</span>
               </label>
               <div className="relative">
-                <Cpu
-                  size={14}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                />
+                <Cpu size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={chipId}
                   onChange={(e) => setChipId(e.target.value)}
                   placeholder="ID do chip"
-                  className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:border-slate-400 transition-colors"
+                  style={{
+                    backgroundColor: "var(--bg-card-inner)",
+                    borderColor: "var(--border)",
+                    color: "var(--text-primary)",
+                  }}
+                  className="w-full pl-8 pr-3 py-2.5 rounded-xl border text-sm outline-none transition-colors placeholder:text-slate-500"
                 />
               </div>
             </div>
 
             {/* Nome do paciente */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-medium text-slate-600">
+              <label style={{ color: "var(--text-secondary)" }} className="text-xs font-medium">
                 Nome do Paciente
               </label>
               <input
@@ -112,13 +113,18 @@ export function NewDeviceModal({ onClose }: NewDeviceModalProps) {
                 value={patientName}
                 onChange={(e) => setPatientName(e.target.value)}
                 placeholder="Digite o nome para vincular ao colete"
-                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:border-slate-400 transition-colors"
+                style={{
+                  backgroundColor: "var(--bg-card-inner)",
+                  borderColor: "var(--border)",
+                  color: "var(--text-primary)",
+                }}
+                className="w-full px-3 py-2.5 rounded-xl border text-sm outline-none transition-colors placeholder:text-slate-500"
               />
             </div>
 
             {/* Grau de risco */}
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-medium text-slate-600">
+              <label style={{ color: "var(--text-secondary)" }} className="text-xs font-medium">
                 Grau de Risco do Paciente
               </label>
               <div className="flex items-center gap-2">
@@ -129,16 +135,15 @@ export function NewDeviceModal({ onClose }: NewDeviceModalProps) {
                     className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                       riskLevel === option.value
                         ? `${option.color} text-white border-transparent`
-                        : "bg-white text-slate-500 border-slate-200 hover:border-slate-300"
+                        : "text-slate-500 border-slate-200"
                     }`}
+                    style={
+                      riskLevel !== option.value
+                        ? { backgroundColor: "var(--bg-card-inner)", borderColor: "var(--border)", color: "var(--text-secondary)" }
+                        : {}
+                    }
                   >
-                    <div
-                      className={`w-2 h-2 rounded-full ${
-                        riskLevel === option.value
-                          ? "bg-white"
-                          : option.color
-                      }`}
-                    />
+                    <div className={`w-2 h-2 rounded-full ${riskLevel === option.value ? "bg-white" : option.color}`} />
                     {option.label}
                   </button>
                 ))}
@@ -148,20 +153,24 @@ export function NewDeviceModal({ onClose }: NewDeviceModalProps) {
           </div>
 
           {/* Rodapé */}
-          <div className="flex flex-col gap-2 px-6 py-4 border-t border-slate-100">
+          <div
+            style={{ borderTopColor: "var(--border)" }}
+            className="flex flex-col gap-2 px-6 py-4 border-t"
+          >
             <button
               onClick={handleSubmit}
               disabled={!isValid}
-              className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${
+              style={
                 isValid
-                  ? "bg-slate-800 hover:bg-slate-700 text-white"
-                  : "bg-slate-100 text-slate-400 cursor-not-allowed"
-              }`}
+                  ? { backgroundColor: "var(--accent)", color: "#020617" }
+                  : { backgroundColor: "var(--bg-card-inner)", color: "var(--text-muted)" }
+              }
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all disabled:cursor-not-allowed"
             >
               <Cpu size={15} />
               Registrar Dispositivo
             </button>
-            <p className="text-center text-slate-400 text-xs">
+            <p style={{ color: "var(--text-muted)" }} className="text-center text-xs">
               Ao registrar, o dispositivo iniciará o pareamento automaticamente.
             </p>
           </div>

@@ -9,63 +9,66 @@ interface UseFallDetectionReturn {
   respondToAlert: () => void;
 }
 
-// Detecta se a mensagem do Flask é um evento de queda
 function isFallEvent(log: SensorLog): boolean {
   return log.tipo === "ALERTA" && log.msg.toUpperCase().includes("QUEDA");
 }
+
+const MOCK_FALL_ALERT: FallAlert = {
+  id: `alert-test`,
+  patientId: "patient-001",
+  patientName: "Carlos Eduardo",
+  location: "Ala B • Quarto 102",
+  detectedAt: new Date(),
+  status: "pending",
+};
 
 export function useFallDetection(): UseFallDetectionReturn {
   const [activeAlert, setActiveAlert] = useState<FallAlert | null>(null);
   const [lastChecked, setLastChecked] = useState<string | null>(null);
 
+  // Listener para teste sem Flask
+  useEffect(() => {
+    function handleTestAlert() {
+      setActiveAlert({ ...MOCK_FALL_ALERT, detectedAt: new Date(), id: `alert-${Date.now()}` });
+    }
+    window.addEventListener("test-fall-alert", handleTestAlert);
+    return () => window.removeEventListener("test-fall-alert", handleTestAlert);
+  }, []);
+
   const checkForFall = useCallback(async () => {
     try {
       const response = await fetch("http://localhost:8080/api/logs");
       if (!response.ok) return;
-
       const logs: SensorLog[] = await response.json();
-
-      // Pega o log mais recente
       const latest = logs[0];
-      if (!latest) return;
-
-      // Evita disparar o mesmo alerta duas vezes
-      if (latest.hora === lastChecked) return;
-
+      if (!latest || latest.hora === lastChecked) return;
       if (isFallEvent(latest)) {
         setLastChecked(latest.hora);
         setActiveAlert({
           id: `alert-${Date.now()}`,
-          patientId: "patient-001",       // mock — 1 colete na demo
-          patientName: "Carlos Eduardo",   // mock — paciente da demo
-          location: "Ala B • Quarto 102", // mock
+          patientId: "patient-001",
+          patientName: "Carlos Eduardo",
+          location: "Ala B • Quarto 102",
           detectedAt: new Date(),
           status: "pending",
         });
       }
     } catch {
-      // Flask offline — falha silenciosa, não quebra o painel
+      // Flask offline — falha silenciosa
     }
   }, [lastChecked]);
 
   useEffect(() => {
-    // Polling a cada 2s — alertas de queda exigem resposta rápida
     const interval = setInterval(checkForFall, 2000);
     return () => clearInterval(interval);
   }, [checkForFall]);
 
   const dismissAlert = useCallback(() => {
-    setActiveAlert((prev) =>
-      prev ? { ...prev, status: "dismissed" } : null
-    );
-    setTimeout(() => setActiveAlert(null), 300);
+    setActiveAlert(null);
   }, []);
 
   const respondToAlert = useCallback(() => {
-    setActiveAlert((prev) =>
-      prev ? { ...prev, status: "responded", respondedAt: new Date() } : null
-    );
-    setTimeout(() => setActiveAlert(null), 300);
+    setActiveAlert(null);
   }, []);
 
   return { activeAlert, dismissAlert, respondToAlert };

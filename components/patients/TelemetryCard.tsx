@@ -97,34 +97,47 @@ export function TelemetryCard({ patient }: TelemetryCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col gap-6">
+    <div
+      className="rounded-2xl shadow-sm p-6 flex flex-col gap-6"
+      style={{
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border)",
+        borderWidth: "1px",
+      }}
+    >
 
       {/* Cabeçalho */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Wifi size={16} className="text-slate-400" />
-          <span className="text-sm font-semibold text-slate-700">
+          <Wifi size={16} style={{ color: "var(--text-muted)" }} />
+          <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
             Telemetria em Tempo Real
           </span>
         </div>
-        <span className="text-[11px] text-slate-400 uppercase tracking-wide">
+        <span className="text-[11px] uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>
           Atualizado: {telemetry.lastUpdate}
         </span>
       </div>
 
       {/* Bateria + Wi-Fi */}
-      <div className="flex items-center justify-around bg-slate-50 rounded-xl p-4 border border-slate-100">
+      <div
+        className="flex items-center justify-around rounded-xl p-4 border"
+        style={{
+          backgroundColor: "var(--bg-card-inner)",
+          borderColor: "var(--border)",
+        }}
+      >
         <div className="flex flex-col items-center gap-1">
-          <span className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">
+          <span className="text-[10px] uppercase tracking-widest mb-1" style={{ color: "var(--text-muted)" }}>
             Bateria
           </span>
           <BatteryLevel level={patient.battery} />
         </div>
 
-        <div className="w-px h-12 bg-slate-200" />
+        <div className="w-px h-12" style={{ backgroundColor: "var(--border)" }} />
 
         <div className="flex flex-col items-center gap-1">
-          <span className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">
+          <span className="text-[10px] uppercase tracking-widest mb-1" style={{ color: "var(--text-muted)" }}>
             Sinal Wi-Fi
           </span>
           <WifiStrength signal={-65} />
@@ -134,24 +147,25 @@ export function TelemetryCard({ patient }: TelemetryCardProps) {
       {/* Tempo na atividade + quedas */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between px-1">
-          <div className="flex items-center gap-2 text-slate-500">
+          <div className="flex items-center gap-2" style={{ color: "var(--text-secondary)" }}>
             <Timer size={15} />
             <span className="text-xs">Tempo na atividade atual</span>
           </div>
-          <span className="text-sm font-bold text-slate-800 tabular-nums">
+          <span className="text-sm font-bold tabular-nums" style={{ color: "var(--text-primary)" }}>
             {telemetry.timeInActivity}
           </span>
         </div>
 
         <div className="flex items-center justify-between px-1">
-          <div className="flex items-center gap-2 text-slate-500">
+          <div className="flex items-center gap-2" style={{ color: "var(--text-secondary)" }}>
             <AlertTriangle size={15} />
             <span className="text-xs">Quedas registradas (mês)</span>
           </div>
           <span
-            className={`text-sm font-bold tabular-nums ${
-              telemetry.fallsThisMonth > 0 ? "text-red-500" : "text-slate-800"
-            }`}
+            className="text-sm font-bold tabular-nums"
+            style={{
+              color: telemetry.fallsThisMonth > 0 ? "#ef4444" : "var(--text-primary)",
+            }}
           >
             {telemetry.fallsThisMonth}
           </span>
@@ -164,18 +178,53 @@ export function TelemetryCard({ patient }: TelemetryCardProps) {
       >
         <span className="text-3xl">{status.icon}</span>
         <div>
-          <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-0.5">
+          <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color: "var(--text-muted)" }}>
             Status de Atividade
           </p>
           <p className={`text-xl font-black ${status.color}`}>
             {status.label}
           </p>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
             {status.description}
           </p>
         </div>
       </div>
+    {/* Histórico de quedas */}
+    <div
+      className="rounded-xl p-4 border flex flex-col gap-3"
+      style={{
+        backgroundColor: "var(--bg-card-inner)",
+        borderColor: "var(--border)",
+      }}
+    >
+      <span className="text-[10px] uppercase tracking-widest" style={{ color: "var(--text-muted)" }}>
+        Histórico de Quedas
+      </span>
 
+      {!patient.fallHistory || patient.fallHistory.length === 0 ? (
+        <p className="text-xs" style={{ color: "var(--text-muted)" }}>Nenhuma queda registrada.</p>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {patient.fallHistory.map((fall, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-between rounded-lg px-3 py-2 border"
+              style={{
+                borderColor: "var(--border)",
+                backgroundColor: "var(--bg-card)",
+              }}
+            >
+              <span className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>
+                {fall.date} às {fall.time}
+              </span>
+              <span className="text-[10px] font-bold text-red-600 uppercase tracking-wide">
+                Queda
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/layout/Sidebar";
+import { UnitProvider } from "@/lib/unit-context";
 
 export default function DashboardLayout({
   children,
@@ -8,12 +9,14 @@ export default function DashboardLayout({
   modal: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-100">
-      <Sidebar />
-      <main className="flex-1 overflow-auto p-6 flex flex-col">
-        {children}
-      </main>
-      {modal}
-    </div>
+    <UnitProvider>
+      <div style={{ backgroundColor: "var(--bg-body)" }} className="flex h-screen overflow-hidden">
+        <Sidebar />
+        <main className="flex-1 overflow-auto p-6 flex flex-col">
+          {children}
+        </main>
+        {modal}
+      </div>
+    </UnitProvider>
   );
 }

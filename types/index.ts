@@ -21,6 +21,7 @@ export interface Patient {
   battery: number;
   bedId?: string;
   avatarUrl?: string;
+  fallHistory?: FallRecord[];
 }
 
 // ============================================================
@@ -97,4 +98,9 @@ export interface MedicalRecord {
   riskLevel: RiskLevel;
   responsible?: string;   // opcional — nome do médico ou enfermeiro
   observations?: string;  // opcional — campo livre
+}
+
+export interface FallRecord {
+  date: string;        // "12/05/2025"
+  time: string;        // "03:42"
 }

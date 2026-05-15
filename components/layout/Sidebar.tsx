@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUnit } from "@/lib/unit-context";
 import {
   LayoutGrid,
   FolderOpen,
@@ -36,6 +37,8 @@ function NavItem({ href, label, icon: Icon }: NavItemProps) {
 }
 
 export function Sidebar() {
+  const { unitName } = useUnit();
+
   return (
     <aside className="w-56 h-screen bg-slate-900 flex flex-col flex-shrink-0 border-r border-slate-800">
 
@@ -44,21 +47,21 @@ export function Sidebar() {
         <h1 className="text-white font-black text-2xl tracking-widest uppercase">
           ALERTA
         </h1>
-        <p className="text-slate-500 text-[10px] mt-1 uppercase tracking-[0.2em]">
-          Clinical Curator
+        <p className="text-slate-500 text-[10px] mt-1 uppercase tracking-[0.2em] truncate">
+          {unitName || "Adicione o nome do hospital"}
         </p>
       </div>
 
       {/* NAVEGAÇÃO */}
       <nav className="flex-1 px-3 py-5 flex flex-col gap-1">
         <NavItem href="/" label="Painel Geral" icon={LayoutGrid} />
-        <NavItem href="/patients" label="Fichas de Pacientes" icon={FolderOpen} />
       </nav>
 
       {/* RODAPÉ */}
       <div className="px-3 py-4 border-t border-slate-800 flex flex-col gap-1">
         <NavItem href="/devices/new" label="Novo Dispositivo" icon={PlusCircle} />
         <NavItem href="/settings" label="Configurações" icon={Settings} />
+        
       </div>
 
     </aside>

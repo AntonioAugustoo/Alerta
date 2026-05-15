@@ -71,13 +71,18 @@ export function PatientCard({ patient }: PatientCardProps) {
 
   return (
     <div
-      className={`bg-white rounded-2xl shadow-sm border border-slate-100 p-4 flex flex-col gap-3 hover:shadow-md transition-all hover:-translate-y-0.5 ${status.glow}`}
+      className="rounded-2xl shadow-sm p-5 flex flex-col gap-4 hover:shadow-md transition-all hover:-translate-y-0.5 "
+      style={{
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border)",
+        borderWidth: "1px",
+      }}
     >
       {/* TOPO — ID + badge de status */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <div className={`w-2 h-2 rounded-full ${status.dot}`} />
-          <span className="text-[11px] text-slate-400 font-medium">
+          <span className="text-[11px] font-medium" style={{ color: "var(--text-muted)" }}>
             ID: {patient.deviceId}
           </span>
         </div>
@@ -92,30 +97,34 @@ export function PatientCard({ patient }: PatientCardProps) {
       <div className="flex items-center gap-3">
         <Avatar name={patient.name} avatarUrl={patient.avatarUrl} />
         <div className="flex flex-col min-w-0">
-          <span className="text-sm font-bold text-slate-800 truncate">
+          <span className="text-sm font-bold truncate" style={{ color: "var(--text-primary)" }}>
             {patient.name}
           </span>
-          <span className="text-xs text-slate-400 truncate mt-0.5">
+          <span className="text-xs truncate mt-0.5" style={{ color: "var(--text-muted)" }}>
             {patient.ward} • {patient.room}
           </span>
           <div className="flex items-center gap-1.5 mt-1">
             <div className={`w-1.5 h-1.5 rounded-full ${risk.dot}`} />
-            <span className="text-[10px] text-slate-400">{risk.label}</span>
+            <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>{risk.label}</span>
           </div>
         </div>
       </div>
 
       {/* RODAPÉ — bateria + link */}
-      <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+      <div
+        className="flex items-center justify-between pt-2 border-t"
+        style={{ borderColor: "var(--border)" }}
+      >
         <div className="flex items-center gap-3">
           <span
             className={`text-xs font-semibold flex items-center gap-1 ${
-              isBatteryCritical ? "text-red-500" : "text-slate-500"
+              isBatteryCritical ? "text-red-500" : ""
             }`}
+            style={!isBatteryCritical ? { color: "var(--text-secondary)" } : {}}
           >
             🔋 {patient.battery}%
           </span>
-          <span className="text-slate-300 text-xs">📶</span>
+          <span className="text-xs" style={{ color: "var(--text-secondary)" }}>📶</span>
         </div>
         <Link
           href={`/patients/${patient.id}`}

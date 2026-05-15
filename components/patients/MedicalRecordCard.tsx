@@ -32,12 +32,19 @@ const riskConfig = {
 
 export function MedicalRecordCard({ record, onAdd }: MedicalRecordCardProps) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 flex flex-col gap-5">
+    <div
+      className="rounded-2xl shadow-sm p-6 flex flex-col gap-5"
+      style={{
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border)",
+        borderWidth: "1px",
+      }}
+    >
 
       {/* Cabeçalho */}
       <div className="flex items-center gap-2">
-        <FileText size={16} className="text-slate-400" />
-        <span className="text-sm font-semibold text-slate-700">
+        <FileText size={16} style={{ color: "var(--text-muted)" }} />
+        <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
           Informações do Prontuário
         </span>
       </div>
@@ -47,11 +54,14 @@ export function MedicalRecordCard({ record, onAdd }: MedicalRecordCardProps) {
         <div className="flex-1 flex flex-col items-center justify-center gap-3 py-10">
           <button
             onClick={onAdd}
-            className="w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all hover:scale-105"
+            className="w-12 h-12 rounded-full hover:opacity-80 flex items-center justify-center transition-all hover:scale-105"
+            style={{
+              backgroundColor: "var(--bg-card-inner)",
+            }}
           >
-            <Plus size={22} className="text-slate-500" />
+            <Plus size={22} style={{ color: "var(--text-secondary)" }} />
           </button>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>
             Adicionar Informações Médicas
           </p>
         </div>
@@ -77,10 +87,10 @@ export function MedicalRecordCard({ record, onAdd }: MedicalRecordCardProps) {
           {/* Responsável técnico */}
           {record.responsible && (
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] text-slate-400 uppercase tracking-widest">
+              <span className="text-[10px] uppercase tracking-widest" style={{ color: "var(--text-muted)" }}>
                 Responsável Técnico
               </span>
-              <span className="text-sm font-semibold text-slate-700">
+              <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
                 {record.responsible}
               </span>
             </div>
@@ -89,10 +99,17 @@ export function MedicalRecordCard({ record, onAdd }: MedicalRecordCardProps) {
           {/* Observações clínicas */}
           {record.observations && (
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] text-slate-400 uppercase tracking-widest">
+              <span className="text-[10px] uppercase tracking-widest" style={{ color: "var(--text-muted)" }}>
                 Observações Clínicas
               </span>
-              <p className="text-sm text-slate-600 leading-relaxed bg-slate-50 rounded-xl p-3 border border-slate-100">
+              <p
+                className="text-sm leading-relaxed rounded-xl p-3 border"
+                style={{
+                  color: "var(--text-secondary)",
+                  backgroundColor: "var(--bg-card-inner)",
+                  borderColor: "var(--border)",
+                }}
+              >
                 {record.observations}
               </p>
             </div>
